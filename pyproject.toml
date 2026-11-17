@@ -1,0 +1,16 @@
+[project]
+name = "ai-mercado-manager"
+version = "0.1.0"
+description = "Approval-first Mercado Livre manager"
+requires-python = ">=3.12"
+dependencies = [
+  "cryptography>=43.0", "fastapi>=0.115", "httpx>=0.27", "openai>=1.0",
+  "psycopg[binary]>=3.2", "pydantic-settings>=2.6", "sqlalchemy>=2.0", "uvicorn[standard]>=0.30"
+]
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.24"]
+[tool.setuptools.packages.find]
+include = ["app*"]
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

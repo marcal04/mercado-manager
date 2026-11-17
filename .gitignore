@@ -1,0 +1,44 @@
+# Runtime credentials: only the empty template is public.
+.env
+.env.*
+*.env
+*.env.*
+!.env.example
+# Databases, recovery material and private exports
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.sqlite-*
+*.dump
+*.sql
+*.mmbak
+*.pem
+*.key
+*.p12
+*.pfx
+backups/
+sources/
+attachments/
+private/
+uploads/
+exports/
+reports/
+logs/
+*.log
+*.har
+*.zip
+# Local state and build artifacts
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+node_modules/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+docker-compose.override.yml
+compose.override.yaml

@@ -1,0 +1,36 @@
+{
+  "description": "Capturas da aplicação em demonstração offline, com dados exclusivamente fictícios. Originais operacionais não incluídos.",
+  "source": "tools/demo_preview.py",
+  "images": {
+    "docs/images/01-visao-geral.jpg": {
+      "sha256": "2e5152406117cec4201b07f20ef091be8f9304cf1888bd4e404ebb85fbbae393",
+      "width": 1234,
+      "height": 1000,
+      "privacy_review": "synthetic_data_only"
+    },
+    "docs/images/02-catalogo.jpg": {
+      "sha256": "a747918e736a76f5aa236a111280b4d7ce5f6a0fb1b6838cc71f8f44affdc39a",
+      "width": 1234,
+      "height": 1000,
+      "privacy_review": "synthetic_data_only"
+    },
+    "docs/images/03-gerenciar-anuncios.jpg": {
+      "sha256": "f3d66c17622da13879a2583f7e8cc4e5cb2408da6e5cf39b449b3842d19d12dd",
+      "width": 1265,
+      "height": 1310,
+      "privacy_review": "synthetic_data_only"
+    },
+    "docs/images/04-financeiro.jpg": {
+      "sha256": "c3fe9a42112ed721ea0dac575d8605793a838d3f3d68c43f673e1865e0732607",
+      "width": 1265,
+      "height": 1382,
+      "privacy_review": "synthetic_data_only"
+    },
+    "docs/images/05-assistente.jpg": {
+      "sha256": "766adc95eb0c46072c58187f27fc008236c2373015f1ad367f98c28aa170b481",
+      "width": 1265,
+      "height": 1020,
+      "privacy_review": "synthetic_data_only"
+    }
+  }
+}

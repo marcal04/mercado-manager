@@ -1,0 +1,65 @@
+services:
+  api:
+    build: .
+    env_file: .env
+    environment:
+      BACKUP_STATUS_PATH: /backup-status/status.json
+    volumes:
+      - ./backups/data:/backup-status:ro
+    ports:
+      - "127.0.0.1:8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: mercado
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python tools/setup_local.py first}
+      POSTGRES_DB: mercado_manager
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mercado -d mercado_manager"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  backup:
+    build:
+      context: .
+      dockerfile: backup/Dockerfile
+    restart: unless-stopped
+    environment:
+      PGHOST: db
+      PGDATABASE: mercado_manager
+      PGUSER: mercado
+      PGPASSWORD: ${POSTGRES_PASSWORD:?Run python tools/setup_local.py first}
+      BACKUP_KEY: ${APP_ENCRYPTION_KEY:?Configure APP_ENCRYPTION_KEY before starting backups}
+    volumes:
+      - ./backups/data:/backups
+    depends_on:
+      db:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+  restore-check:
+    image: postgres:16-alpine
+    profiles: [maintenance]
+    environment:
+      POSTGRES_USER: verify
+      POSTGRES_PASSWORD: ${RESTORE_CHECK_PASSWORD:?Run python tools/setup_local.py first}
+      POSTGRES_DB: restore_check
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U verify -d restore_check"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+volumes:
+  postgres_data:
