@@ -244,7 +244,6 @@ A suíte cobre autenticação, sessões, limites de tentativas, isolamento de da
 | [Acesso privado](docs/PRIVATE-ACCESS.md) | Autenticação e sessões. |
 | [Login HTTPS](docs/HTTPS-LOGIN.md) | Origem pública para proxy ou túnel. |
 | [Backup](docs/BACKUP.md) | Cifragem e restauração isolada. |
-| [Revisão de publicação](PUBLICATION-REVIEW.md) | Escopo e limites da preparação do pacote público. |
 
 ---
 

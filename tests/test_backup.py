@@ -50,7 +50,10 @@ def test_archive_rejects_path_traversal_and_links(tmp_path):
 
 def test_verification_target_is_fixed_and_not_source(monkeypatch):
     monkeypatch.setenv("PGHOST","db");monkeypatch.setenv("PGDATABASE","mercado_manager")
+    password=os.urandom(32).hex()
+    monkeypatch.setenv("RESTORE_CHECK_PASSWORD",password)
     target=verification_environment()
+    assert target["PGPASSWORD"]==password
     assert target["PGHOST"]=="restore-check" and target["PGDATABASE"]=="restore_check"
     monkeypatch.setenv("PGHOST","restore-check")
     with pytest.raises(ValueError):verification_environment()
@@ -80,3 +83,12 @@ def test_verification_is_not_misreported_for_newer_archive(tmp_path,monkeypatch)
     with TestClient(app) as c:
         v=c.get("/api/v1/maintenance").json()
         assert v["verification_state"]=="ok" and not v["latest_archive_verified"]
+
+
+@pytest.mark.parametrize("value", [None, "", "   "])
+def test_verification_requires_private_password(monkeypatch,value):
+    monkeypatch.setenv("PGHOST","db")
+    if value is None:monkeypatch.delenv("RESTORE_CHECK_PASSWORD",raising=False)
+    else:monkeypatch.setenv("RESTORE_CHECK_PASSWORD",value)
+    with pytest.raises(ValueError,match="RESTORE_CHECK_PASSWORD"):
+        verification_environment()

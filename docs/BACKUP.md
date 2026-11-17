@@ -34,3 +34,5 @@ Referências oficiais:
 - https://www.postgresql.org/docs/16/app-pgdump.html
 - https://www.postgresql.org/docs/16/app-pgrestore.html
 - https://cryptography.io/en/latest/hazmat/primitives/symmetric-encryption/
+
+A verificação exige RESTORE_CHECK_PASSWORD no .env privado. O Compose fornece o mesmo valor ao banco temporário e ao worker; não existe senha fixa alternativa. tools/setup_local.py gera esse valor para instalações novas. Não recrie o .env de uma instalação existente.

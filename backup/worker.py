@@ -175,8 +175,11 @@ def verification_environment():
     # This command cannot restore into the running db service, even by changing a CLI flag.
     if os.environ.get("PGHOST") == "restore-check":
         raise ValueError("Source and verification host cannot match")
+    password = os.environ.get("RESTORE_CHECK_PASSWORD", "")
+    if not password.strip():
+        raise ValueError("RESTORE_CHECK_PASSWORD is required for isolated verification")
     return {**os.environ, "PGHOST": "restore-check", "PGDATABASE": "restore_check",
-            "PGUSER": "verify", "PGPASSWORD": "local-restore-check", "PGPORT": "5432"}
+            "PGUSER": "verify", "PGPASSWORD": password, "PGPORT": "5432"}
 
 
 def verify():

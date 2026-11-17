@@ -35,6 +35,7 @@ services:
       dockerfile: backup/Dockerfile
     restart: unless-stopped
     environment:
+      RESTORE_CHECK_PASSWORD: ${RESTORE_CHECK_PASSWORD:?Run python tools/setup_local.py first}
       PGHOST: db
       PGDATABASE: mercado_manager
       PGUSER: mercado
